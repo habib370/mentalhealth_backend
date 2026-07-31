@@ -19,10 +19,10 @@ app.use(cors({
 // Routes
 const authRoutes = require("./routes/authRoutes");
 const mentalHealthRoutes = require("./routes/mentalHealthRoutes");
-
+const gameRoutes = require("./routes/gameRoutes");
 app.use("/api/auth", authRoutes);
 app.use("/api/mentalhealth", mentalHealthRoutes);
-
+app.use("/api/games", gameRoutes);
 // Health check
 app.get("/api/health", (req, res) => {
     res.json({ status: "OK", message: "Server is running" });
