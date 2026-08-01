@@ -11,8 +11,17 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+
+// Allowed origins array (Localhost + Render Frontend)
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://mentalhealth-fronend.onrender.com', // Your deployed frontend
+    process.env.FRONTEND_URL
+].filter(Boolean);
+
 app.use(cors({
-    origin: 'http://localhost:5173', // Your frontend URL
+    origin: allowedOrigins,
     credentials: true
 }));
 
@@ -20,9 +29,11 @@ app.use(cors({
 const authRoutes = require("./routes/authRoutes");
 const mentalHealthRoutes = require("./routes/mentalHealthRoutes");
 const gameRoutes = require("./routes/gameRoutes");
+
 app.use("/api/auth", authRoutes);
 app.use("/api/mentalhealth", mentalHealthRoutes);
 app.use("/api/games", gameRoutes);
+
 // Health check
 app.get("/api/health", (req, res) => {
     res.json({ status: "OK", message: "Server is running" });
@@ -37,12 +48,12 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Connect to MongoDB - FIXED: Removed deprecated options
+// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
     console.log("✅ MongoDB Connected");
     app.listen(PORT, () => {
-        console.log(`🚀 Server running on http://localhost:${PORT}`);
+        console.log(`🚀 Server running on port ${PORT}`);
         console.log(`📊 API endpoints:`);
         console.log(`   - POST   /api/auth/signup`);
         console.log(`   - POST   /api/auth/login`);
