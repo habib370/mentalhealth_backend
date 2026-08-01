@@ -2,27 +2,49 @@ const mongoose = require("mongoose");
 
 const memoryGameSchema = new mongoose.Schema(
   {
-    user: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      index: true
     },
     gameType: {
       type: String,
-      default: "Visual Memory Card Assessment",
+      default: "Memory Match Test"
     },
-    levelReached: { type: Number, required: true },
-    totalMoves: { type: Number, required: true },
-    mismatches: { type: Number, default: 0 },
-    accuracy: { type: Number, required: true },
-    timeTakenSec: { type: Number, required: true },
-    analysisReport: {
-      indicator: { type: String, required: true },
-      description: { type: String, required: true },
-      memoryRating: { type: String, required: true },
+    timeTakenSec: {
+      type: Number,
+      required: true
     },
+    moves: {
+      type: Number,
+      default: 0
+    },
+    score: {
+      type: Number,
+      default: 0
+    },
+    levelReached: {
+      type: Number,
+      default: 1
+    },
+    maxLevels: {
+      type: Number,
+      default: 2
+    },
+    completed: {
+      type: Boolean,
+      default: false
+    },
+    status: {
+      type: String,
+      enum: ["completed", "ended_early"],
+      default: "completed"
+    }
   },
-  { timestamps: true }
+  {
+    timestamps: true
+  }
 );
 
 module.exports = mongoose.model("MemoryGame", memoryGameSchema);
