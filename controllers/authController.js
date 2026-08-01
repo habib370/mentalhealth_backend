@@ -1,4 +1,4 @@
-const User = require("../models/User"); // 1. Fixed casing (Capital 'U')
+const User = require("../models/user"); // 1. Fixed casing (Capital 'U')
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 

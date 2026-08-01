@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/User"); // 1. Fixed casing (Capital 'U')
+const User = require("../models/user"); // 1. Fixed casing (Capital 'U')
 
 module.exports = async (req, res, next) => {
     try {
