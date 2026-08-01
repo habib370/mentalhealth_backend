@@ -1,5 +1,5 @@
 // backend/controllers/mentalHealthController.js
-const MentalHealthRecord = require("../models/mentalHealthRecord");
+const MentalHealthRecord = require("../models/MentalHealthRecord");
 const AnalyticsService = require("../services/analyticsService");
 
 /**
