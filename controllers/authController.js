@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/User"); // 1. Fixed casing (Capital 'U')
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -134,19 +134,18 @@ exports.login = async (req, res) => {
             { expiresIn: "7d" }
         );
 
-        // Set cookie
+        // ✅ FIX: Cross-site cookie options for Render
         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
+            secure: true,      // Must be true for HTTPS on Render
+            sameSite: "none",  // Must be "none" for cross-domain requests
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
         });
 
-        // ✅ FIX: Send token in response body too
         return res.status(200).json({
             ok: true,
             message: "Login successful",
-            token: token, // ✅ ADD THIS - send token in response
+            token: token,
             user: {
                 id: user._id,
                 username: user.username,
@@ -165,9 +164,11 @@ exports.login = async (req, res) => {
 
 /* LOGOUT */
 exports.logout = (req, res) => {
+    // ✅ FIX: Matching sameSite and secure flags on logout clear
     res.cookie("token", "", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
+        sameSite: "none",
         expires: new Date(0)
     });
 
