@@ -1,6 +1,6 @@
 // backend/controllers/mentalHealthController.js
-const MentalHealthRecord = require("../models/MentalHealthRecord");
-const AnalyticsService = require("../services/AnalyticsService");
+const MentalHealthRecord = require("../models/mentalHealthRecord");
+const AnalyticsService = require("../services/analyticsService");
 
 /**
  * Submit a new daily activity record
